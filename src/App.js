@@ -9,34 +9,32 @@ import * as BooksApi from './BooksAPI'
 class BooksApp extends React.Component {
 
   state = {
-    books: {
-      currentlyBooks: [],
-      wantToReadBooks: [],
-      readBooks: []
-    }
+    books: []
   }
 
   componentDidMount() {
     BooksApi.getAll().then((books) => {
-      this.setState({ books: { ...this.state.books, readBooks: books } })
+      this.setState({ books })
     })
   }
 
-  addBook(type, book) {
-    let books = this.state.books.type;
-    books.push(book);
-    this.setState({ books: { ...book, [type]: books } })
+  editBookStatus = (status, selectedBook) => {
+    selectedBook.status = status;
+    this.setState((prevState) => {
+      let newBooks = prevState.books.filter((book) => book.id !== selectedBook.id);
+      newBooks.push(selectedBook);
+      return { books: newBooks };
+    })
   }
-
 
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <BookList books={this.state.books} />
+          <BookList books={this.state.books} editBookStatus={this.editBookStatus} />
         )} />
         <Route path="/search" render={() => (
-          <BookSearch addBook={this.addBook} />
+          <BookSearch books={this.state.books} editBookStatus={this.editBookStatus} />
         )} />
       </div>
     )
