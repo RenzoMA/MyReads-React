@@ -1,36 +1,33 @@
 import React from 'react'
-import BookSelectInput from './BookSelectInput'
 import BookSearchInput from './BookSearchInput'
 import BookListHeader from './BookListHeader'
 import BookSection from './BookSection'
 import PropTypes from 'prop-types'
 import { CURRENTLY_READING, READ, WANT_TO_READ } from '../Contants'
 
-class BookList extends React.Component {
-    static propTypes = {
-        books: PropTypes.array.isRequired
-    }
+const BookList = (props) => {
+    const { books, editBookStatus } = props;
+    const currentlyBooks = books.filter((book) => book.status === CURRENTLY_READING);
+    const wantToReadBooks = books.filter((book) => book.status === WANT_TO_READ);
+    const readBooks = books.filter((book) => book.status === READ);
 
-    render() {
-        let currentlyBooks = this.props.books.filter((book) => book.status === CURRENTLY_READING);
-        let wantToReadBooks = this.props.books.filter((book) => book.status === WANT_TO_READ);
-        let readBooks = this.props.books.filter((book) => book.status === READ);
-
-        return (
-            <div className="list-books">
-                <BookListHeader />
-                <div className="list-books-content">
-                    <div>
-                        <BookSection editBookStatus={this.props.editBookStatus} title={"Currently Reading"} books={currentlyBooks} />
-                        <BookSection editBookStatus={this.props.editBookStatus} title={"Want to Read"} books={wantToReadBooks} />
-                        <BookSection editBookStatus={this.props.editBookStatus} title={"Read"} books={readBooks} />
-                    </div>
+    return (
+        <div className="list-books">
+            <BookListHeader title={'MyReads'} />
+            <div className="list-books-content">
+                <div>
+                    <BookSection editBookStatus={editBookStatus} title={"Currently Reading"} books={currentlyBooks} />
+                    <BookSection editBookStatus={editBookStatus} title={"Want to Read"} books={wantToReadBooks} />
+                    <BookSection editBookStatus={editBookStatus} title={"Read"} books={readBooks} />
                 </div>
-                <BookSearchInput />
             </div>
+            <BookSearchInput />
+        </div>
+    )
+}
 
-        )
-    }
+BookList.propTypes = {
+    books: PropTypes.array.isRequired
 }
 
 export default BookList
