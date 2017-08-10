@@ -3,14 +3,14 @@ import Book from './Book'
 import PropTypes from 'prop-types'
 
 const BookSection = props => {
-    const { title, books } = this.props;
+    const { title, books, editBookStatus } = props;
     return (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{title}</h2>
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {books.map((book) =>
-                        <li key={book.id} ><Book editBookStatus={this.props.editBookStatus} book={book} /></li>
+                        <li key={book.id} ><Book editBookStatus={editBookStatus} book={book} /></li>
                     )}
                 </ol>
             </div>
