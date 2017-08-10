@@ -13,8 +13,8 @@ class BookSection extends React.Component {
       BooksApi.search(value, 50).then((books) => {
         this.setState({ books: books.error ? [] : books });
       })
-    }else{
-      this.setState({books: []})
+    } else {
+      this.setState({ books: [] })
     }
   }
 
@@ -39,8 +39,9 @@ class BookSection extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {books.map((book) =>
-              <li key={book.id} ><Book /></li>
+            {books.map((book) => {
+              return (<li key={book.id} ><Book book={book} /></li>)
+            }
             )}
             {this.props.addBook}
           </ol>
