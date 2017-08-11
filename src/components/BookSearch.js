@@ -18,7 +18,7 @@ class BookSection extends React.Component {
           for (let book of books) {
             for (let selectedBook of booksSelected) {
               if (book.id === selectedBook.id) {
-                book.status = selectedBook.status;
+                book.shelf = selectedBook.shelf;
               }
             }
           }
@@ -44,7 +44,7 @@ class BookSection extends React.Component {
           <ol className="books-grid">
             {
               books.map((book) => {
-                return (<li key={book.id} ><Book editBookStatus={(status, book) => this.props.editBookStatus(status, book)} book={book} /></li>)
+                return (<li key={book.id} ><Book editBookShelf={(shelf, book) => this.props.editBookShelf(shelf, book)} book={book} /></li>)
               })
             }
           </ol>
